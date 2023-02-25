@@ -1,0 +1,13 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zpj.permission">
+    
+    <application>
+
+        <activity android:name=".ZPermission$ContextRequester$PermissionActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        
+    </application>
+    
+    
+</manifest>

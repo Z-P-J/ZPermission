@@ -31,21 +31,21 @@ tools:context=".MainActivity">
             android:id="@+id/btn_write_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请求修改系统setting界面"
+            android:text="打开修改系统setting界面"
             />
 
         <Button
             android:id="@+id/btn_overlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请求Overlay权限"
+            android:text="打开Overlay权限申请界面"
             />
 
         <Button
             android:id="@+id/btn_permissions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="启动权限界面"
+            android:text="打开权限界面"
             />
 
     </LinearLayout>

@@ -1,14 +1,15 @@
 package com.zpj.permission.demo;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.zpj.permission.ZPermission;
 import com.zpj.permission.demo.databinding.ActivityMainBinding;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,37 +22,77 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-//        ActivityResultLauncher<String> launcher = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
-//                getActivityResultRegistry(), new ActivityResultCallback<Boolean>() {
-//                    @Override
-//                    public void onActivityResult(Boolean result) {
-//
-//
-//
-//                        if (result.equals(true)) {
-//                            //权限获取到之后的动作
-//                        } else {
-//                            //权限没有获取到的动作
-//                        }
-//                    }
-//                });
+        binding.btnStorage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TestDialogFragment dialogFragment = new TestDialogFragment();
+                dialogFragment.show(getSupportFragmentManager(), "tag");
 
 
-        ZPermission.with(this)
-                .setObserver(new ZPermission.SimpleObserver() {
-                    @Override
-                    public void onGranted() {
-                        Toast.makeText(MainActivity.this, "onGranted", Toast.LENGTH_SHORT).show();
-                    }
+//                ZPermission.with(MainActivity.this)
+//                        .requestPermissions(new ZPermission.Observer() {
+//                            @Override
+//                            public void onGranted(List<String> granted) {
+//                                Toast.makeText(MainActivity.this, "onGranted " + granted, Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                            @Override
+//                            public void onDenied(List<String> deniedForever, List<String> denied) {
+//                                Toast.makeText(MainActivity.this, "onDenied " + denied + " forever=" + deniedForever, Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+            }
+        });
 
-                    @Override
-                    public void onDenied() {
-                        Toast.makeText(MainActivity.this, "onDenied", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .request();
+        binding.btnWriteSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 测试通过ApplicationContext获取权限
+                ZPermission.with(MainActivity.this.getApplicationContext())
+                        .requestWriteSettings(new ZPermission.SimpleObserver() {
+                            @Override
+                            public void onGranted() {
+                                Toast.makeText(MainActivity.this, "requestWriteSettings granted", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onDenied() {
+                                Toast.makeText(MainActivity.this, "requestWriteSettings denied", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        });
+
+        binding.btnOverlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ZPermission.with(MainActivity.this)
+                        .requestDrawOverlays(new ZPermission.SimpleObserver() {
+                            @Override
+                            public void onGranted() {
+                                Toast.makeText(MainActivity.this, "requestDrawOverlays granted", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onDenied() {
+                                Toast.makeText(MainActivity.this, "requestDrawOverlays denied", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        });
+
+        binding.btnPermissions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ZPermission.with(MainActivity.this).requestAppDetailsSettings();
+            }
+        });
+
 
 
     }
+
+
 
 }
